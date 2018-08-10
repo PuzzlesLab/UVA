@@ -1,0 +1,23 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+    
+    public static void main(String[] args){
+       Scanner in = new Scanner(System.in);
+       
+       int n = in.nextInt();
+       
+       for(int i=0;i<n;i++){
+           int l = in.nextInt();
+           int h = in.nextInt();
+           int w = in.nextInt();
+           
+           if(l<=20&&h<=20&&w<=20){
+               System.out.printf("Case %d: %s\n",i+1,"good");
+           }else{
+               System.out.printf("Case %d: %s\n",i+1,"bad");
+           }
+       }
+       
+    }
+}

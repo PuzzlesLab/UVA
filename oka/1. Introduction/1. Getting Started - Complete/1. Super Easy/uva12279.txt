@@ -1,0 +1,28 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+    
+    public static void main(String[] args)throws IOException{
+       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+       String s;
+       int line = 0;
+       while((s=br.readLine())!=null&& !s.equals("0")){
+           line++;
+           int emoogle = 0;
+           int he = 0;
+           
+           StringTokenizer st = new StringTokenizer(br.readLine());
+
+           while(st.hasMoreTokens()){
+               if(Integer.parseInt(st.nextToken())==0){
+                   he++;
+               }else{
+                   emoogle++;
+               }
+                    
+           }
+           System.out.printf("Case %d: %d\n",line,(emoogle-he));
+       }
+       
+    }
+}

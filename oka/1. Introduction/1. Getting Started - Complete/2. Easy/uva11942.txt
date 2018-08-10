@@ -1,0 +1,46 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+    
+    public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        
+        int N = in.nextInt();
+        System.out.println("Lumberjacks:");
+        for(int i=0;i<N;i++){
+            int c[] = new int[10];
+            for(int j=0;j<10;j++){               
+                c[j] = in.nextInt();               
+            }
+            if(c[1]-c[0]>0){
+                boolean order = true;
+                for(int j=1;j<9;j++){
+                    if(c[j+1]-c[j]<0){                            
+                        order = false;
+                        break;
+                    }
+                }
+                if(order){
+                    System.out.println("Ordered");
+                }else{
+                    System.out.println("Unordered");
+                }
+            }else{
+                boolean order = true;
+                for(int j=1;j<9;j++){
+                    if(c[j+1]-c[j]>0){                      
+                        order = false;
+                        break;
+                    }
+                }
+                if(order){
+                    System.out.println("Ordered");
+                }else{
+                    System.out.println("Unordered");
+                }
+            }
+        }
+        
+        
+    }
+}

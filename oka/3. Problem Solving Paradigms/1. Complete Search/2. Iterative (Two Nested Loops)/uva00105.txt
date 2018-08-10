@@ -1,0 +1,36 @@
+import java.util.*;
+import java.io.*;
+public class Main {      
+
+    public static void main(String[] args)throws IOException{   
+        BufferedReader br =  new BufferedReader(new InputStreamReader(System.in));
+        String s;
+        int build[] = new int[20001];
+        while((s=br.readLine())!=null&&!s.isEmpty()){
+            StringTokenizer st = new StringTokenizer(s);
+            int l = Integer.parseInt(st.nextToken());
+            int h = Integer.parseInt(st.nextToken());
+            int r = Integer.parseInt(st.nextToken());
+            
+            for(int i=2*l;i<=2*r;i++){
+                if(build[i]<h){
+                    build[i] = h;
+                }
+            }         
+        }
+        
+        boolean first = true;
+        
+        for(int i=0;i<20000;i++){
+            if(build[i]!=build[i+1]){
+                if(first){
+                    System.out.print((i+1)/2+" "+build[i+1]);
+                    first = false;
+                }else{
+                    System.out.print(" "+(i+1)/2+" "+build[i+1]);
+                }    
+            }
+        }
+        System.out.println("");      
+    }
+}

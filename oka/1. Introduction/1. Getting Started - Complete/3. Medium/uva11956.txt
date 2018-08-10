@@ -1,0 +1,32 @@
+import java.util.*;
+import java.io.*;
+public class Main {       
+    public static void main(String[] args)throws IOException{    
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        for(int i=1;i<=T;i++){
+           
+            int arr[] = new int[100];
+            int index = 0;
+            String s = br.readLine();
+
+            for(int j=0;j<s.length();j++){
+                switch(s.charAt(j)){
+                    case '>': index = (index+1)%100; break;
+                    case '<': index = (100+index-1)%100; break;
+                    case '+': arr[index] = (arr[index]+1)%256; break;
+                    case '-': arr[index] = (256+arr[index]-1)%256; break;
+                    default:
+                }
+            }
+            System.out.printf("Case %d:",i);
+            for(int j=0;j<100;j++){
+                System.out.printf(" %02X",arr[j]);
+            }
+            System.out.println("");
+        }
+          
+    }
+}

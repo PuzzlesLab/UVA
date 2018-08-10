@@ -1,0 +1,65 @@
+import java.util.*;
+import java.io.*;
+public class Main {     
+    public static void main(String[] args){   
+        Scanner in = new Scanner(System.in);
+        int n;
+        int line = 0;
+        while((n=in.nextInt())!=0){
+            line++;
+            
+            if(line>1){
+                System.out.println();
+            }
+            
+            boolean solution = false;
+            for(int i=1234;i<=98765/2;i++){
+                if(i*n>98765){
+                    break;
+                }else{
+                    int a = i;
+                    boolean digit[] = new boolean[10];
+                    boolean result  = true;
+                    for(int j=0;j<5;j++){
+                        if(digit[a%10]){
+                            result = false;
+                            break;
+                        }else{
+                            digit[a%10] = true;
+                        }
+                        a /= 10;
+                    }
+                    if(result){
+                        int b = i*n;
+                        boolean digit2[] = new boolean[10];
+                        for(int j=0;j<5;j++){
+                            if(digit2[b%10]){
+                                result = false;
+                                break;
+                            }else{
+                                digit2[b%10] = true;
+                            }
+                            b /= 10;
+                        }
+                        if(result){
+                            for(int j=0;j<10;j++){
+                                if(!(digit[j]^digit2[j])){
+                                    result = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if(result){
+                      
+                        solution = true;
+                        System.out.printf("%05d / %05d = %d\n",i*n,i,n);
+                    }
+                }
+            }
+            if(!solution){
+                System.out.printf("There are no solutions for %d.\n",n);
+            }
+        }
+    }
+}

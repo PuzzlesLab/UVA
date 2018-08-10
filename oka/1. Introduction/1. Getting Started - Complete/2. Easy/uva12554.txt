@@ -1,0 +1,33 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+    
+    public static void main(String[] args){
+        Scanner in= new Scanner(System.in);
+        
+        int n = in.nextInt();
+        String s[] = {"Happy","birthday","to","you",
+                    "Happy","birthday","to","you",
+                    "Happy","birthday","to","Rujia",
+                    "Happy","birthday","to","you"};
+        String name[] = new String[n];
+        for(int i=0;i<n;i++){
+           name[i] = in.next();
+        }
+        
+        int turn = 0;
+        if(n%16==0){
+            turn = n;
+        }else{
+            turn = n+(16-(n%16));
+        }
+        
+        for(int i=0;i<turn;i++){
+            System.out.printf("%s: %s\n",name[i%n],s[i%16]);
+        }
+        
+            
+       
+        
+    }
+}

@@ -1,0 +1,27 @@
+import java.util.*;
+import java.io.*;
+public class Main {    
+    
+    public static void main(String[] args)throws IOException{    
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String s;
+        
+        while(!(s=br.readLine()).equals("0 0")){
+            StringTokenizer st = new StringTokenizer(s);
+
+            int a = Integer.parseInt(st.nextToken());
+            int c = Integer.parseInt(st.nextToken());
+            
+            StringTokenizer st2 = new StringTokenizer(br.readLine());
+            int min = 0;
+            int tmp = a;
+            for(int i=0;i<c;i++){
+                int x = Integer.parseInt(st2.nextToken());              
+                min = Math.min(min,min+x-tmp);
+                tmp = x;
+            }
+            System.out.println(Math.abs(min));
+        }
+             
+    }
+}

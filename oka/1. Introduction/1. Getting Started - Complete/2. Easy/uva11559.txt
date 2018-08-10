@@ -1,0 +1,50 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+    
+    public static int getMin(int [] t){
+        int min = Integer.MAX_VALUE;
+        for(int i=0;i<t.length;i++){
+            if(t[i]!=0){
+                min = Math.min(min,t[i]);
+            }
+        }    
+        return (min!=Integer.MAX_VALUE)?min:0;
+    }
+    
+    public static void main(String[] args)throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String s;
+        
+        while((s=br.readLine())!=null){
+            StringTokenizer st = new StringTokenizer(s);
+            int p = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            int h = Integer.parseInt(st.nextToken());
+            int w = Integer.parseInt(st.nextToken());
+            
+            int totalPrice[] = new int[h];
+            for(int i=0;i<h;i++){
+                boolean gtPlace = false;
+                int price = Integer.parseInt(br.readLine());
+                StringTokenizer st2 = new StringTokenizer(br.readLine());
+                for(int j=0;j<w;j++){
+                    if(Integer.parseInt(st2.nextToken())>p){
+                        gtPlace = true;
+                    }
+                }
+                if(gtPlace&&(p*price<=b)){
+                    totalPrice[i] = p*price;  
+                }
+            }
+            
+            if(getMin(totalPrice)==0){
+                System.out.println("stay home");
+            }else{
+                System.out.println(getMin(totalPrice));
+            }
+       
+        }
+        
+    }
+}

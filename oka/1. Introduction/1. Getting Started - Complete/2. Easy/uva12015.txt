@@ -1,0 +1,33 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+    
+    public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        
+        int T = in.nextInt();
+        
+        for(int i=0;i<T;i++){
+            String s[] = new String[10];
+            int r[] = new int[10];
+           
+            int max = 0;
+            
+            for(int j=0;j<10;j++){
+                s[j] = in.next();
+                r[j] = in.nextInt();
+             
+                max = Math.max(max,r[j]);
+            }
+            
+            System.out.printf("Case #%d:\n",i+1);
+            for(int j=0;j<10;j++){
+                if(r[j]==max){
+                    System.out.println(s[j]);
+                }
+            }
+        }
+        
+        
+    }
+}

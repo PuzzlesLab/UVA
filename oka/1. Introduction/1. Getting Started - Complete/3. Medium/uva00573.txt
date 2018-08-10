@@ -1,0 +1,47 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+    
+    public static void main(String[] args)throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String s;
+        
+        while(!(s=br.readLine()).equals("0 0 0 0")){
+            StringTokenizer st = new StringTokenizer(s);
+            
+            double H = Double.parseDouble(st.nextToken());
+            double U = Double.parseDouble(st.nextToken());
+            double D = Double.parseDouble(st.nextToken());
+            double F = Double.parseDouble(st.nextToken());
+            
+            double fatigue = U*(F/100);
+            
+            int day = 0;
+            double current = 0;
+            boolean success = false;
+            
+            do{
+                
+                day++;
+                current += U;
+                if(current>H){
+                    success = true;
+                    break;
+                }
+                if(U>0){
+                    U -= fatigue;
+                    if(U<0)
+                        U = 0;
+                }
+                current -= D;
+            }while(current>=0);
+            
+            if(success){
+                System.out.printf("success on day %d\n",day);
+            }else{
+                System.out.printf("failure on day %d\n",day);
+            }
+            
+        }
+    }
+}

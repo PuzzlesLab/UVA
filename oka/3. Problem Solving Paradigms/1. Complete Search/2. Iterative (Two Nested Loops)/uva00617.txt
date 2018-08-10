@@ -1,0 +1,66 @@
+import java.util.*;
+import java.io.*;
+public class Main {  
+    public static boolean check(int speed,double L[],int G[],int period[]){
+        for(int i=0;i<L.length;i++){
+            if(((L[i]*3600)/speed)%period[i]>G[i]){
+                return false;
+            }
+        }
+        return true;
+    } 
+    
+    public static void main(String[] args){   
+        Scanner in = new Scanner(System.in);
+        int n;
+        int line = 0;
+        while((n=in.nextInt())!=-1){
+            line++;
+            double L[] = new double[n];
+            int G[] = new int[n];
+            int period[] = new int[n];
+            
+            for(int i=0;i<n;i++){
+                L[i] = in.nextDouble();
+                G[i] = in.nextInt()+in.nextInt();// G = green + yellow
+                period[i] = G[i]+in.nextInt();
+            }
+            
+            int count = 0;
+            int hold = 0;
+            boolean flag = false;
+            
+            System.out.printf("Case %d:",line);
+            
+            for(int i=30;i<=60;i++){
+                if(check(i,L,G,period)){
+                    count++;
+                    if(count==1){
+                        if(flag){
+                            System.out.printf(", %d",i);
+                        }else{
+                            System.out.printf(" %d",i);
+                        }
+                    }else if(count==2){
+                        System.out.printf("-");
+                    }
+                    hold = i;
+                    flag = true;
+                }else{
+                    if(count>1){
+                        System.out.printf("%d",hold);
+                    }
+                    hold = 0;
+                    count = 0;
+                }
+            }
+            if(count>1&&hold!=0){
+                System.out.printf("%d",hold);
+            }
+            if(!flag){
+                System.out.printf(" No acceptable speeds.");
+            }
+            System.out.println();
+        }
+    }
+}

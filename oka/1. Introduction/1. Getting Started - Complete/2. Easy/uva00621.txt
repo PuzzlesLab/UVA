@@ -1,0 +1,25 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+    
+    public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        
+        int n =  in.nextInt();
+        
+        for(int i =0;i<n;i++){
+            String s =in.next();
+            if(s.equals("1")||s.equals("4")||s.equals("78")){
+                System.out.println("+");
+            }else if(s.length()>=2&&s.substring(s.length()-2).equals("35")){
+                System.out.println("-");
+            }else if(s.length()>=3&&s.substring(0,3).equals("190")){
+                System.out.println("?");
+            }else{
+                System.out.println("*");
+            }
+        }
+        
+       
+    }
+}

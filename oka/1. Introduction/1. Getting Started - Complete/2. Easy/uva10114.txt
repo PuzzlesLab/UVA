@@ -1,0 +1,70 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+    
+    public static void main(String[] args)throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String s ;
+        
+        while((s=br.readLine())!=null){
+            
+            StringTokenizer st = new StringTokenizer(s);           
+            
+            int loanDuration = Integer.parseInt(st.nextToken());
+            
+            if(loanDuration<0){
+                break;
+            }
+            
+            double downPayment = Double.parseDouble(st.nextToken());
+            double amountLoan = Double.parseDouble(st.nextToken());
+            
+            double userOwn  = amountLoan;
+            double car = amountLoan+downPayment;
+            double monthPayment = (amountLoan)/loanDuration;
+            
+            int depreciation = Integer.parseInt(st.nextToken());
+            
+            double month[] = new double[loanDuration+1];
+            
+            
+            for(int i=0;i<depreciation;i++){
+                StringTokenizer st2 = new StringTokenizer(br.readLine());
+                int m = Integer.parseInt(st2.nextToken());
+                month[m] = Double.parseDouble(st2.nextToken());
+            }
+            
+            double hold = 0;
+            
+            for(int i=0;i<=loanDuration;i++){
+                if(month[i]!=(float)0){
+                    hold = month[i];
+                }else{
+                    month[i] = month[i-1];
+                }
+            }
+            
+            int targetMonth = 0;
+            
+            for(int i=0;i<=loanDuration;i++){
+                if(i!=0){
+                    userOwn -= monthPayment;
+                }
+                car *= (1-month[i]);
+                if(userOwn<car){
+                    targetMonth = i;
+                    break;
+                }
+            }
+            
+            if(targetMonth==1){
+                System.out.println("1 month");
+            }else{
+                System.out.printf("%d months\n",targetMonth);
+            }
+            
+        }
+        
+       
+    }
+}

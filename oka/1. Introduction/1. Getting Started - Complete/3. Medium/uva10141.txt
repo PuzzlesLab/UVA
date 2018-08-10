@@ -1,0 +1,67 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+    
+    public static void main(String[] args)throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String s;
+ 
+        int line = 0;
+        
+        while(!(s=br.readLine()).equals("0 0")){
+            line++;
+            
+            
+            if(line!=1){
+                System.out.println("");
+            }
+            
+            StringTokenizer st = new StringTokenizer(s);
+            
+            int n = Integer.parseInt(st.nextToken());
+            int d = Integer.parseInt(st.nextToken());
+            
+            for(int i=0;i<n;i++){
+                br.readLine();
+            }
+            
+            String proposal[] = new String[d];
+            float price[] = new float[d];
+            int numberRequire[] = new int[d];
+            
+            for(int i=0;i<d;i++){
+                proposal[i] = br.readLine();
+                
+                StringTokenizer st2 = new StringTokenizer(br.readLine());
+                
+                price[i] = Float.parseFloat(st2.nextToken());
+                numberRequire[i] = Integer.parseInt(st2.nextToken());
+                
+                for(int j=0;j<numberRequire[i];j++){
+                    br.readLine();
+                }
+            }
+            
+            int index = -1;
+            float minPrice = 0;
+            int maxRequire = 0;
+            
+            for(int i=0;i<d;i++){
+                if(numberRequire[i]>maxRequire){
+                    index = i;
+                    maxRequire = numberRequire[i];
+                }else if(numberRequire[i]==maxRequire){
+                    if(price[index]>price[i]){
+                        index = i;
+                    }
+                }
+            }
+            
+            System.out.printf("RFP #%d\n%s\n",line,proposal[index]);
+           
+
+        }
+        
+        
+    }
+}

@@ -1,0 +1,24 @@
+import java.util.*;
+import java.io.*;
+public class Main{     
+    public static void main(String[] args){   
+        Scanner in = new Scanner(System.in);
+        int T = in.nextInt();
+        for(int i=1;i<=T;i++){
+            int r = in.nextInt();
+            int s[] = new int[r];
+            for(int j=0;j<r;j++){
+                s[j] = in.nextInt();
+            }
+            int min = Integer.MAX_VALUE;
+            for(int j=0;j<r;j++){
+                int sum = 0;
+                for(int k=0;k<r&&sum<min;k++){
+                    sum += Math.abs(s[j]-s[k]);
+                }
+                min = Math.min(min,sum); 
+            }
+            System.out.println(min);
+        }
+    }
+}

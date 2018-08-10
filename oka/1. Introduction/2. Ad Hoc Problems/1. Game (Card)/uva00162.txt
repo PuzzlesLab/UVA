@@ -1,0 +1,102 @@
+import java.util.*;
+import java.io.*;
+public class Main {   
+    public static ArrayList<Integer> deck;
+    
+    public static void turn(ArrayList<Integer>p1,ArrayList<Integer>p2){
+        if(!p1.isEmpty()){
+            if(p1.get(0)==0){
+                deck.add(p1.remove(0));
+                turn(p2,p1);
+            }else{
+                faceCase(p1,p2);
+            }
+        }       
+    }
+    
+    public static void faceCase(ArrayList<Integer>p1,ArrayList<Integer>p2){
+        int num = p1.remove(0);
+        deck.add(num);
+        
+        boolean interrupt = false;
+        boolean finish = false;
+
+        for(int i=0;i<num&&!p2.isEmpty();i++){
+            if(p2.get(0)==0){
+                deck.add(p2.remove(0));
+                if(i==num-1){
+                    finish = true;
+                }
+            }else{
+                interrupt = true;
+                faceCase(p2,p1);
+                break;
+            }
+        }
+
+        if(!interrupt&&finish){
+            p1.addAll(deck);
+            deck.clear();
+            turn(p1,p2);
+        }
+                   
+    }
+    
+    public static int face(String s){
+        switch(s.charAt(1)){
+            case 'J': return 1;
+            case 'Q': return 2;
+            case 'K': return 3;
+            case 'A': return 4;
+            default : return 0;
+        }
+    }
+    
+    public static void main(String[] args)throws IOException{    
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));       
+        String s;
+               
+        while(!(s=br.readLine()).equals("#")){
+            
+            ArrayList<Integer> p1 = new ArrayList<>();
+            ArrayList<Integer> p2 = new ArrayList<>();
+            deck = new ArrayList<>();
+            boolean dealer = false;
+
+            StringTokenizer st = new StringTokenizer(s);
+            
+            while(st.hasMoreTokens()){        
+                if(!dealer){
+                    p1.add(face(st.nextToken()));
+                }else{
+                    p2.add(face(st.nextToken()));       
+                }    
+                dealer = !dealer;
+            }
+
+            for(int i=0;i<3;i++){
+                StringTokenizer st2 = new StringTokenizer(br.readLine());
+                while(st2.hasMoreTokens()){
+                    if(!dealer){
+                        p1.add(face(st2.nextToken()));
+                    }else{
+                        p2.add(face(st2.nextToken()));
+                    }
+                    dealer = !dealer;
+                }
+            }
+            
+            Collections.reverse(p1);
+            Collections.reverse(p2);
+        
+            turn(p1,p2);
+        
+            if(p1.isEmpty()){
+                System.out.printf("1%3d\n",p2.size());
+            }else{
+                System.out.printf("2%3d\n",p1.size());
+            }
+            
+        }             
+    }
+}
