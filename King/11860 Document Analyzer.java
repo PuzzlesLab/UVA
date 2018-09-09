@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeSet;
+import java.util.HashSet;
 
 class Main {
 	
@@ -12,41 +12,36 @@ class Main {
 		for (int testCase=1;testCase<=testCaseCount;testCase++) {
 			String s;
 			
-			ArrayList<String> words=new ArrayList<>();
+			ArrayList<String> list=new ArrayList<>();
 			StringBuilder sb=new StringBuilder();
 			while (!(s=br.readLine().trim()).equals("END")) {
 				for (char c : s.toCharArray())
 					if (c>='a' && c<='z') sb.append(c);
 					else if (sb.length()>0) {
-						words.add(sb.toString());
+						list.add(sb.toString());
 						sb.setLength(0);
 					}
 				
 				 if (sb.length()>0) {
-					words.add(sb.toString());
+					list.add(sb.toString());
 					sb.setLength(0);
 				}
 			}
 			
-			
-			HashMap<String,TreeSet<Integer>> wordIndex=new HashMap<>();
-			for (int i=0;i<words.size();i++) {
-				String word=words.get(i);
-				if (!wordIndex.containsKey(word)) wordIndex.put(word, new TreeSet<>());
-				wordIndex.get(word).add(i);
-				
-			}
+			String [] words=list.toArray(new String[list.size()]);
+			HashSet<String> uniqueWords=new HashSet<>();
+			uniqueWords.addAll(list);
 			
 			int minDiff=Integer.MAX_VALUE;
 			int minS = 0, minE = 0, currentMin=0, currentMax=0;
-			int uniqueWordSize=wordIndex.keySet().size();
+			int uniqueWordSize=uniqueWords.size();
 			HashMap<String, Integer> counter=new HashMap<>();
-			for (;currentMax<words.size();currentMax++) {
-				String currWord = words.get(currentMax);
+			for (;currentMax<words.length;currentMax++) {
+				String currWord = words[currentMax];
 				counter.put(currWord, counter.getOrDefault(currWord,0)+1);
 				
 				while (counter.size() == uniqueWordSize) {
-					String minWord=words.get(currentMin);
+					String minWord=words[currentMin];
 					if (counter.get(minWord)==1) {
 						int diff=currentMax-currentMin;
 						if (diff < minDiff) {
