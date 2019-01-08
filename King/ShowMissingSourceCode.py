@@ -8,6 +8,9 @@ subm_list = requests.get('https://uhunt.onlinejudge.org/api/subs-user/422649').j
 passed_problems_id = set([x[1] for x in subm_list if x[2]==90])
 passed_problems_num = sorted([str(problem_id_data_map[x][1]).zfill(5) for x in passed_problems_id])
 
-existing_problems = set([x.split(' ')[0] for x in os.listdir('') if x.split(' ')[0].isdigit()])
+existing_problems = set([x.split(' ')[0] for x in os.listdir() if x.split(' ')[0].isdigit()])
 missing_problems_id = [x for x in passed_problems_num if x not in existing_problems]
-print('\n'.join([x+" "+problem_num_data_map[int(x)][2] for x in missing_problems_id]))
+if len(missing_problems_id) == 0:
+    print('No missing!')
+else:
+    print('\n'.join([x+" "+problem_num_data_map[int(x)][2] for x in missing_problems_id]))
