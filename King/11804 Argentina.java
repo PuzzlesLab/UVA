@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
@@ -101,9 +100,11 @@ class Main {
 		}
 	}
 	
+	private static Combi BestCombi=null;
+	
 	public static void generateCombi(ArrayList<Combi> combis, Player [] players, int index, Combi currC) {
 		if (index==players.length) {
-			combis.add(currC.copy());
+			if (BestCombi==null || BestCombi.compareTo(currC)<0) BestCombi=currC.copy();
 		} else {
 			if (currC.atk.size()<5) {
 				currC.addAtk(players[index]);
@@ -125,12 +126,12 @@ class Main {
 			Player [] players=new Player[10];
 			for (int i=0;i<players.length;i++) players[i]=new Player(br.readLine());
 			
+			BestCombi=null;
 			ArrayList<Combi> combis=new ArrayList<>();
 			generateCombi(combis, players, 0, new Combi());
-			Collections.sort(combis);
 			
 			System.out.printf("Case %d:\n", testCase);
-			System.out.println(combis.get(combis.size()-1));
+			System.out.println(BestCombi);
 		}
 	}
 
