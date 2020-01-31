@@ -45,24 +45,26 @@ class Main {
 			for (int q=0;q<Q;q++) {
 				int x=sc.nextInt();
 				int y=sc.nextInt();
-				int [] maxDist=new int [N+1];
-				Arrays.fill(maxDist, Integer.MAX_VALUE);
+				int [] minDist=new int [N+1];
+				Arrays.fill(minDist, Integer.MAX_VALUE);
 				
 				if (x!=y) {
 					PriorityQueue<Tuple> queue=new PriorityQueue<>();
-					maxDist[x]=airport[x] ? 0 : 1;
-					queue.offer(new Tuple(x,maxDist[x]));
+					minDist[x]=airport[x] ? 0 : 1;
+					queue.offer(new Tuple(x,minDist[x]));
 					while (!queue.isEmpty()) {
 						Tuple t=queue.poll();
 						if (t.n==y) break;
-						for (int i=1;i<=N;i++) if (adjMat[t.n][i]!=Integer.MAX_VALUE && t.d+adjMat[t.n][i]<maxDist[i]) {
-							maxDist[i]=t.d+adjMat[t.n][i];
-							queue.offer(new Tuple(i,maxDist[i]));
+						if (t.d != minDist[t.n]) continue;
+						
+						for (int i=1;i<=N;i++) if (adjMat[t.n][i]!=Integer.MAX_VALUE && t.d+adjMat[t.n][i]<minDist[i]) {
+							minDist[i]=t.d+adjMat[t.n][i];
+							queue.offer(new Tuple(i,minDist[i]));
 						}
 					}
-				} else maxDist[x]=0;
+				} else minDist[x]=0;
 				
-				sb.append(maxDist[y]!=Integer.MAX_VALUE ? maxDist[y] : -1);
+				sb.append(minDist[y]!=Integer.MAX_VALUE ? minDist[y] : -1);
 				sb.append('\n');
 			}
 			

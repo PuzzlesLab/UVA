@@ -42,28 +42,28 @@ class Main {
 				adjList[U].add(new Tuple(U, V, Integer.parseInt(st.nextToken())));
 			}
 			
-			int [] maxDist=new int [N];
-			Arrays.fill(maxDist,Integer.MAX_VALUE);
+			int [] minDist=new int [N];
+			Arrays.fill(minDist,Integer.MAX_VALUE);
 			ArrayList<Tuple> ancestors []=new ArrayList [N];
 			for (int n=0;n<N;n++) ancestors[n]=new ArrayList<>();
 			
 			PriorityQueue<Tuple> q=new PriorityQueue<>();
 			q.offer(new Tuple(S,S,0));
-			maxDist[S]=0;
+			minDist[S]=0;
 			while (!q.isEmpty()) {
 				Tuple t=q.poll();
 				for (Tuple adj : adjList[t.dest]) {
 					int d=t.length+adj.length;
-					if (d<maxDist[adj.dest]) {
+					if (d<minDist[adj.dest]) {
 						ancestors[adj.dest].clear();
-						maxDist[adj.dest]=d;
+						minDist[adj.dest]=d;
 						q.offer(new Tuple(adj.src, adj.dest,d));
 					}
-					if (d==maxDist[adj.dest]) ancestors[adj.dest].add(adj);
+					if (d==minDist[adj.dest]) ancestors[adj.dest].add(adj);
 				}
 			}
 			
-			if (maxDist[D]!=Integer.MAX_VALUE) {
+			if (minDist[D]!=Integer.MAX_VALUE) {
 				Stack<Integer> stk=new Stack<>();
 				stk.push(D);
 				while (!stk.isEmpty()) {
@@ -74,23 +74,23 @@ class Main {
 					}
 				}
 
-				Arrays.fill(maxDist,Integer.MAX_VALUE);
+				Arrays.fill(minDist,Integer.MAX_VALUE);
 				q=new PriorityQueue<>();
 				q.offer(new Tuple(S,S,0));
-				maxDist[S]=0;
+				minDist[S]=0;
 				while (!q.isEmpty()) {
 					Tuple t=q.poll();
 					for (Tuple adj : adjList[t.dest]) {
 						int d=t.length+adj.length;
-						if (d<maxDist[adj.dest]) {
-							maxDist[adj.dest]=d;
+						if (d<minDist[adj.dest]) {
+							minDist[adj.dest]=d;
 							q.offer(new Tuple(adj.src, adj.dest,d));
 						}
 					}
 				}
 			}
 
-			System.out.println(maxDist[D]==Integer.MAX_VALUE ? -1 : maxDist[D]);
+			System.out.println(minDist[D]==Integer.MAX_VALUE ? -1 : minDist[D]);
 		}
 	}
 
