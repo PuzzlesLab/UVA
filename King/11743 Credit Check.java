@@ -1,33 +1,29 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 class Main {
-
-	public static int digitSum (int n) {
-		int count=0;
-		while (n>0) {
-			count+=n%10;
-			n/=10;
-		}
-		return count;
-	}
 	
-	public static void main (String [] args) throws IOException {
+	public static void main (String [] args) throws Exception {
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		int testCaseCount=Integer.parseInt(br.readLine());
-
 		for (int testCase=0;testCase<testCaseCount;testCase++) {
-			StringTokenizer st=new StringTokenizer(br.readLine());
-			int total=0;
-			while (st.hasMoreTokens()) {
-				char [] c=st.nextToken().toCharArray();
-				total=total+(digitSum((c[0]-'0')*2)+digitSum((c[2]-'0')*2))+(digitSum(c[1]-'0')+digitSum(c[3]-'0'));
-			}
+			int [] nums=new int [16];
+			int numsPos=0;
+			for (char c : br.readLine().toCharArray()) if (c!=' ') nums[numsPos++]=c-'0';
 			
-			if ((total)%10==0) System.out.println("Valid");
-			else System.out.println("Invalid");
+			int sum=0;
+			for (int i=0;i<nums.length;i+=2) {
+				int doubled=nums[i]<<1;
+				while (doubled>0) {
+					sum+=doubled%10;
+					doubled/=10;
+				}
+				
+			}
+			for (int i=1;i<nums.length;i+=2) sum+=nums[i];
+			System.out.println((sum%10==0) ? "Valid" : "Invalid");
 		}
+		
 	}
+
 }
