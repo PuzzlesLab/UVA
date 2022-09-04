@@ -9,7 +9,7 @@ class Main {
 	private static int [][] ShortestTime;
 	private static int HotelsCount;
 
-	// Test data : https://icpc.global/worldfinals/problems/2012%20ACM-ICPC%20World%20Finals/icpc2012-testdata.tar.gz (C)
+	// Test data : https://icpc.global/worldfinals/problems/2012%20ACM-ICPC%20World%20Finals/icpc2012-testdata.tar.gz (bustour)
 
 	private static int countOnes(int n) {
 		int ans=0;
@@ -80,10 +80,8 @@ class Main {
 			else {
 				int [][] dp1=tsp(0);
 				int [][] dp2=tsp(N-1);
-				
-				int lim=(HotelsCount%2==0) ? dp1.length/2 : dp1.length;
-				
-				for (int fMask=0;fMask<lim;fMask++) if (countOnes(fMask)==HotelsCount/2) {
+
+				for (int fMask=0;fMask<dp1.length;fMask++) if (countOnes(fMask)==HotelsCount/2) {
 					int bMask=dp1.length-1-fMask;
 
 					int fDist=NO_TIME;
