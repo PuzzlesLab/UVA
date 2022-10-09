@@ -10,6 +10,24 @@ class Main {
 
 	private static final int [][] Deltas={{0,-1},{0,1},{-1,0},{1,0}};
 
+	private static boolean [][] rotate(boolean [][] map) {
+		boolean [][] result=new boolean [map[0].length][map.length];
+		for (int x=0;x<map.length;x++) for (int y=0;y<map[x].length;y++) result[map[x].length-1-y][x]=map[x][y];
+		return result;
+	}
+
+	private static boolean [][] reflect(boolean [][] map) {
+		boolean [][] result=new boolean [map.length][map[0].length];
+		for (int x=0;x<map.length;x++) for (int y=0;y<map[x].length;y++) result[x][map[x].length-1-y]=map[x][y];
+		return result;
+	}
+
+	private static boolean compare(boolean [][] map1, boolean [][] map2) {
+		if (map1.length!=map2.length || map1[0].length!=map2[0].length) return false;
+		for (int x=0;x<map1.length;x++) for (int y=0;y<map1[x].length;y++) if (map1[x][y]!=map2[x][y]) return false;
+		return true;
+	}
+
 	private static class Position {
 		int x, y;
 		public Position(int x, int y) {
@@ -20,13 +38,27 @@ class Main {
 	
 	private static class Cluster implements Comparable<Cluster> {
 		int x, y, size;
-		boolean [][] map;
+		boolean [][][] maps;
 		
 		public Cluster(int x, int y) {
 			this.x=x;
 			this.y=y;
 		}
 		
+		public void constructMaps(boolean [][] map) {
+			// Bad practice to modify the value of map here. :/
+			this.maps=new boolean [8][][];
+
+			int idx=0;
+			for (int ref=0;ref<2;ref++) { //Reflect
+				for (int rot=0;rot<4;rot++) { //Rotate
+					map=rotate(map);
+					this.maps[idx++]=map;
+				}
+				map=reflect(map);
+			}
+		}
+
 		public int compareTo(Cluster c) {
 			if (this.size!=c.size) return this.size-c.size;
 			if (this.x!=c.x) return this.x-c.x;
@@ -67,55 +99,21 @@ class Main {
 
 			result.add(c);
 			c.size=points.size();
-			c.map=new boolean [maxx-minx+1][maxy-miny+1];
+			boolean [][] smallMap=new boolean [maxx-minx+1][maxy-miny+1];
 			for (int i=0;i<points.size();i++) {
 				Position p=points.get(i);
-				c.map[p.x-minx][p.y-miny]=true;
+				smallMap[p.x-minx][p.y-miny]=true;
 			}
+			c.constructMaps(smallMap);
 		}
 
 		Collections.sort(result);
 		return result;
 	}
 
-	private static boolean [][] rotate(boolean [][] flags) {
-		boolean [][] result=new boolean [flags[0].length][flags.length];
-		for (int x=0;x<flags.length;x++) {
-			for (int y=0;y<flags[x].length;y++) {
-				result[flags[x].length-1-y][x]=flags[x][y];
-			}
-		}
-		return result;
-	}
-
-	private static boolean [][] reflect(boolean [][] flags) {
-		boolean [][] result=new boolean [flags.length][flags[0].length];
-		for (int x=0;x<flags.length;x++) {
-			for (int y=0;y<flags[x].length;y++) {
-				result[x][flags[x].length-1-y]=flags[x][y];
-			}
-		}
-		return result;
-	}
-
-	private static boolean compare(boolean [][] flags1, boolean [][] flags2) {
-		if (flags1.length!=flags2.length || flags1[0].length!=flags2[0].length) return false;
-		for (int x=0;x<flags1.length;x++) for (int y=0;y<flags1[x].length;y++) if (flags1[x][y]!=flags2[x][y]) return false;
-		return true;
-	}
-
 	private static boolean verify(Cluster c1, Cluster c2) {
 		if (c1.size!=c2.size) return false;
-
-		boolean [][] curr=c2.map;
-		for (int reflect=0;reflect<2;reflect++) {
-			for (int rotate=0;rotate<4;rotate++) {
-				curr=rotate(curr);
-				if (compare(c1.map,curr)) return true;
-			}
-			curr=reflect(curr);
-		}
-
+		for (int variant=0;variant<c2.maps.length;variant++) if (compare(c1.maps[0],c2.maps[variant])) return true;
 		return false;
 	}
 
