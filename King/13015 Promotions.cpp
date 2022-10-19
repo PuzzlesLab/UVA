@@ -1,4 +1,4 @@
-// Java version = TLE. :/ wth.
+// Java version passed in Kattis, but not here. Really?
 
 #include <bits/stdc++.h>
 using namespace std;
