@@ -18,14 +18,14 @@ class Main {
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		int TC=Integer.parseInt(br.readLine());
 		for (int tc=1;tc<=TC;tc++) {
-			int N=(Integer.parseInt(br.readLine())>>1)-1;
-			BigInteger bi=BigInteger.valueOf((N<<1)+1);
+			int N=Integer.parseInt(br.readLine());
+			BigInteger bi=BigInteger.valueOf(N-1);
 
 			StringBuilder sb=new StringBuilder();
 			sb.append("Case ");
 			sb.append(tc);
 			sb.append(": ");
-			sb.append(cat[N].multiply(bi));
+			sb.append(cat[(N>>1)-1].multiply(bi));
 			System.out.println(sb);
 		}
 	}
