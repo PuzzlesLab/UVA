@@ -5,7 +5,7 @@ import java.math.BigInteger;
 class Main {
 
 	public static void main(String[] args) throws Exception {
-		final int MAX_N=101;
+		final int MAX_N=501;
 
 		BigInteger TWO=new BigInteger("2");
 		BigInteger [] cat=new BigInteger [MAX_N];
