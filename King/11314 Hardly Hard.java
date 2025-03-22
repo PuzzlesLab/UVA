@@ -14,6 +14,30 @@ class Main {
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		int TC=Integer.parseInt(br.readLine());
 		for (int tc=0;tc<TC;tc++) {
+			/*
+			 * Make the following figure
+			 *            
+			 *     B'\  |  B 
+			 *        \ | /\
+			 *         C|/  \ A
+			 *          |\ / D
+			 * ----------------------
+			 *          |   \
+			 *          |    \ A'
+			 *          |
+			 * 
+			 * A' = Reflection of A across X axis  (ax,-ay)
+			 * B' = Reflection of B across Y axis  (-bx,by)
+			 * 
+			 * Distance(D,A') = Distance(D,A)
+			 * Distance(B',C) = Distance(B,C)
+			 * 
+			 * Distance(B'C') = Distance(B',C)+Distance(C,D)+Distance(D,A')
+			 * 
+			 * Perimeter = Distance(A,B)+Distance(B,C)+Distance(C,D)+Distance(D,A)
+			 *           = Distance(A,B)+Distance(B',C)+Distance(C,D)+Distance(D,A')
+			 *           = Distance(A,B)+Distance(B',C')
+			 */
 			StringTokenizer st=new StringTokenizer(br.readLine());
 			double ax=Double.parseDouble(st.nextToken());
 			double ay=Double.parseDouble(st.nextToken());
